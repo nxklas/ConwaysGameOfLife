@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using ConwaysGameOfLife.Abstracts;
+using System.Drawing;
 
-namespace ConwaysGameOfLife.Game
+namespace ConwaysGameOfLife
 {
     /// <summary>
     /// Represents a <see cref="Cell"/> in a 2-dimensional space
     /// </summary>
-    internal sealed class Cell2D : Cell, IDrawable
+    public sealed class Cell2D : Cell, IDrawable2D
     {
         /// <summary>
         /// Represents a standardized width for <see cref="Cell2D"/> instances
@@ -44,7 +45,6 @@ namespace ConwaysGameOfLife.Game
         /// <param name="graphics">The graphics used to paint</param>
         public void Draw(Graphics graphics)
         {
-            
             graphics.FillRectangle(GetsInspected ? Brushes.Blue : IsAlive ? Brushes.Green : Brushes.Black, _position.X, _position.Y, Width, Heigth);
             graphics.DrawRectangle(new Pen(Color.White),_position.X,_position.Y,Width,Heigth);
         }

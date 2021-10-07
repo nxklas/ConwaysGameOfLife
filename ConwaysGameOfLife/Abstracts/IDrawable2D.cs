@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 
-namespace ConwaysGameOfLife.Game
+namespace ConwaysGameOfLife.Abstracts
 {
     /// <summary>
     /// Represents an interface for drawable objects
     /// </summary>
-    internal interface IDrawable
+    public interface IDrawable2D
     {
         /// <summary>
         /// Draws the current object

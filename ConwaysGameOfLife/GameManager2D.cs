@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using ConwaysGameOfLife.Patterns;
+using System.Collections.Generic;
 using System.Drawing;
 
-namespace ConwaysGameOfLife.Game
+namespace ConwaysGameOfLife
 {
     /// <summary>
     /// Represents the manager for Conway's Game of Life
     /// </summary>
-    internal sealed class GameManager
+    public sealed class GameManager2D
     {
-        private const int CellsX = 39;
-        private const int CellsY = 22;
+        private const int CellsX = 75;
+        private const int CellsY = 75;
         private Cell2D[,] _playground;
+        private int _generation;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GameManager"/> class
+        /// Initializes a new instance of <see cref="GameManager2D"/> class
         /// </summary>
-        public GameManager()
+        public GameManager2D()
         {
             _playground = new Cell2D[CellsX, CellsY];
+            _generation = 0;
             InitPlayground();
         }
 
@@ -34,7 +37,7 @@ namespace ConwaysGameOfLife.Game
                 }
             }
 
-            InitFigure();
+            InitPattern<PrePulsar>(10);
         }
 
         //TODO: add classes for various figures; add bounds and handle them (if figure goes out of them)
@@ -42,33 +45,24 @@ namespace ConwaysGameOfLife.Game
         /// <summary>
         /// Initializes the init pattern
         /// </summary>
-        private void InitFigure()
+        public void InitPattern<TPatterm>(int offset) where TPatterm : Pattern2D
         {
-            int middle = 15;
+            TPatterm pattern = typeof(TPatterm).Assembly.CreateInstance(typeof(TPatterm).FullName) as TPatterm;
 
-            _playground[middle, middle - 1].Bear();
-            _playground[middle, middle].Bear();
-            _playground[middle, middle + 1].Bear();
-
-            middle = 1;
-
-            _playground[middle - 1, middle].Bear();
-            _playground[middle, middle].Bear();
-            _playground[middle + 1, middle].Bear();
-
-            middle = 8;
-
-            _playground[middle - 1, middle].Bear();
-            _playground[middle, middle].Bear();
-            _playground[middle + 1, middle].Bear();
-            _playground[middle + 1, middle-1].Bear();
-            _playground[middle, middle - 2].Bear();
+            for (int x = 0; x < pattern.Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < pattern.Cells.GetLength(1); y++)
+                {
+                    if (pattern.Cells[x, y]==1)
+                        _playground[x + offset, y + offset].Bear();
+                }
+            }
         }
 
         /// <summary>
         /// Lets every cell on the playground age
         /// </summary>
-        public void NextGeneration()
+        public int NextGeneration()
         {
             IList<Point> willDie = new List<Point>();
             IList<Point> willBorn = new List<Point>();
@@ -77,12 +71,12 @@ namespace ConwaysGameOfLife.Game
             {
                 for (int y = 0; y < CellsY; y++)
                 {
-
                     bool xIncreaseable = false;
                     bool xDecreaseable = false;
                     bool yIncreaseable = false;
                     bool yDecreaseable = false;
                     int neighbours = 0;
+
                     _playground[x, y].GetsInspected = true;
 
 
@@ -90,7 +84,6 @@ namespace ConwaysGameOfLife.Game
 
                     if (len >= x + 1)
                         xIncreaseable = true;
-
                     if (0 <= x - 1)
                         xDecreaseable = true;
 
@@ -99,11 +92,8 @@ namespace ConwaysGameOfLife.Game
 
                     if (len >= y + 1)
                         yIncreaseable = true;
-
                     if (0 <= y - 1)
                         yDecreaseable = true;
-
-
 
                     if (xIncreaseable)
                         if (_playground[x + 1, y].IsAlive)
@@ -117,7 +107,6 @@ namespace ConwaysGameOfLife.Game
                     if (yDecreaseable)
                         if (_playground[x, y - 1].IsAlive)
                             neighbours++;
-
                     if (xIncreaseable && yIncreaseable)
                         if (_playground[x + 1, y + 1].IsAlive)
                             neighbours++;
@@ -142,19 +131,21 @@ namespace ConwaysGameOfLife.Game
                 }
             }
 
-            foreach (var current in willDie)
+            foreach (Point current in willDie)
                 _playground[current.X, current.Y].Kill();
-            foreach (var current in willBorn)
+            foreach (Point current in willBorn)
                 _playground[current.X, current.Y].Bear();
+
+            return _generation++;
         }
 
         /// <summary>
         /// Gets an enumeration of every cell on the playground
         /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="IDrawable"/>s which represents every cell on the playground</returns>
-        public IEnumerable<IDrawable> GetItems()
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Cell2D"/>s which represents every cell on the playground</returns>
+        public IEnumerable<Cell2D> GetItems()
         {
-            IList<IDrawable> items = new List<IDrawable>();
+            IList<Cell2D> items = new List<Cell2D>();
 
             for (int x = 0; x < CellsX; x++)
             {
@@ -165,6 +156,11 @@ namespace ConwaysGameOfLife.Game
             }
 
             return items;
+        }
+
+        public void Resize(int width, int height)
+        {
+            
         }
     }
 }

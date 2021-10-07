@@ -1,9 +1,9 @@
-﻿namespace ConwaysGameOfLife.Game
+﻿namespace ConwaysGameOfLife.Abstracts
 {
     /// <summary>
     /// Represents the base class for cells
     /// </summary>
-    internal abstract class Cell : IInspect
+    public abstract class Cell : IInspect
     {
         private CellState _state;
         private bool _getsInspected;
@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Indicates whether current cell gets inspected by <see cref="GameManager.NextGeneration"/>
+        /// Indicates whether current cell gets inspected by <see cref="GameManager2D.NextGeneration"/>
         /// </summary>
         public bool GetsInspected { get => _getsInspected; set => _getsInspected = value; }
         /// <summary>
