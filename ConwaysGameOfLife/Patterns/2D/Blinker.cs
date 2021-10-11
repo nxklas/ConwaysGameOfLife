@@ -8,7 +8,12 @@
         /// <summary>
         /// Initializes a new instance of <see cref="Blinker"/> class
         /// </summary>
-        public Blinker() : base()
+        public Blinker() : base(new int[3, 1]
+        {
+            { 1 },
+            { 1 },
+            { 1 }
+        })
         {
         }
 
@@ -16,14 +21,5 @@
         /// The name of the Blinker pattern
         /// </summary>
         public override string Name => "Blinker";
-        /// <summary>
-        /// The cells inside the Blinker pattern
-        /// </summary>
-        public override int[,] Cells => new int[3, 1]
-        {
-            { 1 },
-            { 1 },
-            { 1 },
-        };
     }
 }

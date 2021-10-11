@@ -8,7 +8,14 @@
         /// <summary>
         /// Initializes a new instance of <see cref="HeavyweightSpaceship"/> class
         /// </summary>
-        public HeavyweightSpaceship() : base()
+        public HeavyweightSpaceship() : base(new int[5, 7]
+        {
+            { 0, 0, 0, 1, 1, 0, 0 },
+            { 0, 1, 0, 0, 0, 0, 1 },
+            { 1, 0, 0, 0, 0, 0, 0 },
+            { 1, 0, 0, 0, 0, 0, 1 },
+            { 1, 1, 1, 1, 1, 1, 0 }
+        })
         {
         }
 
@@ -16,16 +23,5 @@
         /// The name of the Heavyweight spaceship pattern
         /// </summary>
         public override string Name => "Heavyweight spaceship";
-        /// <summary>
-        /// The cells inside the Heavyweight spaceship pattern
-        /// </summary>
-        public override int[,] Cells => new int[5, 7]
-        {
-            { 0, 0,0,1,1,0,0 },
-            { 0, 1,0,0,0,0,1 },
-            { 1, 0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,1},
-            { 1,1,1,1,1,1,0}
-        };
     }
 }

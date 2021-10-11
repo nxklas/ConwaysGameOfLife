@@ -8,7 +8,11 @@
         /// <summary>
         /// Initializes a new instance of <see cref="TTetromino"/> class
         /// </summary>
-        public TTetromino() : base()
+        public TTetromino() : base(new int[2, 3]
+        {
+            { 1, 1, 1 },
+            { 0, 1, 0 }
+        })
         {
         }
 
@@ -16,13 +20,5 @@
         /// The name of the T-tetromino pattern
         /// </summary>
         public override string Name => "T-tetromino";
-        /// <summary>
-        /// The cells inside the T-tetromino pattern
-        /// </summary>
-        public override int[,] Cells => new int[2, 3]
-        {
-            { 1, 1, 1 },
-            { 0, 1, 0 }
-        };
     }
 }

@@ -8,7 +8,12 @@
         /// <summary>
         /// Initializes a new instance of <see cref="PrePulsar"/> class
         /// </summary>
-        public PrePulsar() : base()
+        public PrePulsar() : base(new int[3, 9]
+        {
+            { 1, 1, 1, 0, 0, 0, 1, 1, 1, },
+            { 1, 0, 1, 0, 0, 0, 1, 0, 1, },
+            { 1, 1, 1, 0, 0, 0, 1, 1, 1, }
+        })
         {
         }
 
@@ -16,14 +21,5 @@
         /// The name of the Pre-pulsar pattern
         /// </summary>
         public override string Name => "Pre-pulsar";
-        /// <summary>
-        /// The cells inside the Pre-pulsar pattern
-        /// </summary>
-        public override int[,] Cells => new int[3, 9]
-        {
-            { 1, 1, 1, 0, 0, 0, 1, 1, 1, },
-            { 1, 0, 1, 0, 0, 0, 1, 0, 1, },
-            { 1, 1, 1, 0, 0, 0, 1, 1, 1, }
-        };
     }
 }

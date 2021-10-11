@@ -8,7 +8,13 @@
         /// <summary>
         /// Initializes a new instance of <see cref="Beacon"/> class
         /// </summary>
-        public Beacon() : base()
+        public Beacon() : base(new int[4, 4]
+        {
+            { 1, 1, 0, 0 },
+            { 1, 1, 0, 0 },
+            { 0, 0, 1, 1 },
+            { 0, 0, 1, 1 }
+        })
         {
         }
 
@@ -16,16 +22,5 @@
         /// The name of the Beacon pattern
         /// </summary>
         public override string Name => "Beacon";
-
-        /// <summary>
-        /// The cells inside the Beacon pattern
-        /// </summary>
-        public override int[,] Cells => new int[4, 4]
-        {
-            { 1, 1, 0, 0 },
-            { 1, 1, 0, 0 },
-            { 0, 0, 1, 1 },
-            { 0, 0, 1, 1 }
-        };
     }
 }

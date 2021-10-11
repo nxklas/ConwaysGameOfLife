@@ -8,7 +8,12 @@
         /// <summary>
         /// Initializes a new instance of <see cref="Pentadecathlon"/> class
         /// </summary>
-        public Pentadecathlon() : base()
+        public Pentadecathlon() : base(new int[3, 10]
+        {
+            { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 },
+            { 1, 1, 0, 1, 1, 1, 1, 0, 1, 1 },
+            { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 }
+        })
         {
         }
 
@@ -16,14 +21,5 @@
         /// The name of the Pentadecathlon pattern
         /// </summary>
         public override string Name => "Pentadecathlon";
-        /// <summary>
-        /// The cells inside the Pentadecathlon pattern
-        /// </summary>
-        public override int[,] Cells => new int[3, 10]
-        {
-            { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 },
-            { 1, 1, 0, 1, 1, 1, 1, 0, 1, 1 },
-            { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 }
-        };
     }
 }

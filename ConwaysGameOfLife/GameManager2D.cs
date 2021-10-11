@@ -37,24 +37,28 @@ namespace ConwaysGameOfLife
                 }
             }
 
-            InitPattern<PrePulsar>(10);
+            InitPattern<TTetromino>(10, 10);
+            InitPattern<TTetromino>(15, 10);
         }
 
-        //TODO: add classes for various figures; add bounds and handle them (if figure goes out of them)
+        //TODO: add bounds and handle them (if figure goes out of them)
 
         /// <summary>
-        /// Initializes the init pattern
+        /// Initializes the specified pattern <typeparamref name="TPattern"/> and adds it to the playground
         /// </summary>
-        public void InitPattern<TPatterm>(int offset) where TPatterm : Pattern2D
+        /// <typeparam name="TPattern">The type of the pattern to initialize</typeparam>
+        /// <param name="offsetX"></param>
+        /// <param name="offsetY"></param>
+        public void InitPattern<TPattern>(int offsetX, int offsetY) where TPattern : Pattern2D
         {
-            TPatterm pattern = typeof(TPatterm).Assembly.CreateInstance(typeof(TPatterm).FullName) as TPatterm;
+            TPattern pattern = typeof(TPattern).Assembly.CreateInstance(typeof(TPattern).FullName) as TPattern;
 
             for (int x = 0; x < pattern.Cells.GetLength(0); x++)
             {
                 for (int y = 0; y < pattern.Cells.GetLength(1); y++)
                 {
-                    if (pattern.Cells[x, y]==1)
-                        _playground[x + offset, y + offset].Bear();
+                    if (pattern.Cells[x, y] == 1)
+                        _playground[x + offsetX, y + offsetY].Bear();
                 }
             }
         }
@@ -65,7 +69,7 @@ namespace ConwaysGameOfLife
         public int NextGeneration()
         {
             IList<Point> willDie = new List<Point>();
-            IList<Point> willBorn = new List<Point>();
+            IList<Point> willBear = new List<Point>();
 
             for (int x = 0; x < CellsX; x++)
             {
@@ -121,7 +125,7 @@ namespace ConwaysGameOfLife
                             neighbours++;
 
                     if (!_playground[x, y].IsAlive && neighbours == 3)
-                        willBorn.Add(new Point(x, y));
+                        willBear.Add(new Point(x, y));
 
                     if (neighbours < 2 || neighbours > 3)
                         if (_playground[x, y].IsAlive)
@@ -133,7 +137,7 @@ namespace ConwaysGameOfLife
 
             foreach (Point current in willDie)
                 _playground[current.X, current.Y].Kill();
-            foreach (Point current in willBorn)
+            foreach (Point current in willBear)
                 _playground[current.X, current.Y].Bear();
 
             return _generation++;

@@ -8,7 +8,11 @@
         /// <summary>
         /// Initializes a new instance of <see cref="Block"/> class
         /// </summary>
-        public Block() : base()
+        public Block() : base(new int[2, 2]
+        {
+            { 1, 1 },
+            { 1, 1 }
+        })
         {
         }
 
@@ -16,13 +20,5 @@
         /// The name of the Block pattern
         /// </summary>
         public override string Name => "Block";
-        /// <summary>
-        /// The cells inside the Block pattern
-        /// </summary>
-        public override int[,] Cells => new int[2, 2]
-        {
-            { 1, 1 },
-            { 1, 1 }
-        };
     }
 }

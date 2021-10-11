@@ -8,7 +8,11 @@
         /// <summary>
         /// Initializes a new instance of <see cref="PreBeehive"/> class
         /// </summary>
-        public PreBeehive() : base()
+        public PreBeehive() : base(new int[2, 3]
+        {
+            { 1, 1, 1 },
+            { 1, 1, 1 }
+        })
         {
         }
 
@@ -16,13 +20,5 @@
         /// The name of the Pre-beehive pattern
         /// </summary>
         public override string Name => "Pre-beehive";
-        /// <summary>
-        /// The cells inside the Pre-beehive pattern
-        /// </summary>
-        public override int[,] Cells => new int[2, 3]
-        {
-            { 1, 1, 1},
-            { 1, 1, 1},
-        };
     }
 }

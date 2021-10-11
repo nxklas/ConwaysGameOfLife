@@ -8,7 +8,11 @@
         /// <summary>
         /// Initializes a new instance of <see cref="PreBlock"/> class
         /// </summary>
-        public PreBlock() : base()
+        public PreBlock() : base(new int[2, 2]
+        {
+            { 1, 0 },
+            { 1, 1 }
+        })
         {
         }
 
@@ -16,13 +20,5 @@
         /// The name of the Pre-block pattern
         /// </summary>
         public override string Name => "Pre-block";
-        /// <summary>
-        /// The cells inside the Pre-block pattern
-        /// </summary>
-        public override int[,] Cells => new int[2, 2]
-        {
-            { 1, 0 },
-            { 1, 1 },
-        };
     }
 }

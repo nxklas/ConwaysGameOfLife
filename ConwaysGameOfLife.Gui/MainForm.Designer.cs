@@ -36,7 +36,7 @@ namespace ConwaysGameOfLife.Gui
             // 
             // _idleLoop
             // 
-            this._idleLoop.Interval = 1000;
+            this._idleLoop.Interval = 500;
             this._idleLoop.Tick += new System.EventHandler(this._idleLoop_Tick);
             // 
             // _lGeneration

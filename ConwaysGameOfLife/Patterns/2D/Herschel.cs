@@ -8,7 +8,13 @@
         /// <summary>
         /// Initializes a new instance of <see cref="Herschel"/> class
         /// </summary>
-        public Herschel() : base()
+        public Herschel() : base(new int[4, 3]
+        {
+            { 1, 0, 0 },
+            { 1, 1, 1 },
+            { 1, 0, 1 },
+            { 0, 0, 1 }
+        })
         {
         }
 
@@ -16,15 +22,5 @@
         /// The name of the Herschel pattern
         /// </summary>
         public override string Name => "Herschel";
-        /// <summary>
-        /// The cells inside the Herschel pattern
-        /// </summary>
-        public override int[,] Cells => new int[4, 3]
-        {
-            { 1, 0, 0 },
-            { 1, 1, 1 },
-            { 1, 0, 1 },
-            { 0, 0, 1 },
-        };
     }
 }

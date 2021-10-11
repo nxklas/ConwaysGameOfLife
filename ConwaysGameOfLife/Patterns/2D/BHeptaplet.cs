@@ -8,7 +8,12 @@
         /// <summary>
         /// Initializes a new instance of <see cref="BHeptaplet"/> class
         /// </summary>
-        public BHeptaplet() : base()
+        public BHeptaplet() : base(new int[3, 5]
+        {
+            { 1, 0, 0, 1, 1 },
+            { 0, 1, 1, 1, 0 },
+            { 0, 0, 1, 0, 0 }
+        })
         {
         }
 
@@ -16,14 +21,5 @@
         /// The name of the B-heptaplet pattern
         /// </summary>
         public override string Name => "B-heptaplet";
-        /// <summary>
-        /// The cells inside the B-heptaplet pattern
-        /// </summary>
-        public override int[,] Cells => new int[3, 5]
-        {
-            { 1, 0, 0, 1, 1 },
-            { 0, 1, 1, 1, 0 },
-            { 0, 0, 1, 0, 0 },
-        };
     }
 }
