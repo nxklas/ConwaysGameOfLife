@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConwaysGameOfLife.Abstracts;
+using ConwaysGameOfLife.Translators;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -10,11 +12,19 @@ namespace ConwaysGameOfLife.Patterns
     public abstract class Pattern2D : IPattern
     {
         private int[,] _cells;
+        private double _offsetY;
+        private double _offsetX;
 
         /// <summary>
         /// Initializes a new instance of <see cref="Pattern2D"/> class
         /// </summary>
-        protected Pattern2D(int[,] cells) => Set(cells);
+        protected Pattern2D(int[,] cells)
+        {
+            Set(cells);
+        }
+
+        public int OffsetX => (int)_offsetX;
+        public int OffsetY => (int)_offsetY;
 
         /// <summary>
         /// The name of the specific 2-dimensional pattern
@@ -28,21 +38,20 @@ namespace ConwaysGameOfLife.Patterns
         /// <summary>
         /// Mirrors the current pattern
         /// </summary>
-        protected void Mirror(MirrorOptions options = MirrorOptions.Horizontally)
+        protected void Mirror(MirrorOptions option = MirrorOptions.Horizontally)
         {
             int lenX = _cells.GetLength(0);
             int lenY = _cells.GetLength(1);
-            Dictionary<Point, int> tempStorage = new();
             int[,] mirrored = new int[lenX, lenY];
 
-            switch (options)
+            switch (option)
             {
                 case MirrorOptions.Horizontally:
                     for (int x = lenX - 1; x > -1; x--)
                     {
                         for (int y = lenY - 1; y > -1; y--)
                         {
-                            tempStorage.Add(new Point(lenX - x - 1, y), _cells[x, y]);
+                            mirrored[lenX - x - 1, y] = _cells[x, y];
                         }
                     }
                     break;
@@ -51,15 +60,10 @@ namespace ConwaysGameOfLife.Patterns
                     {
                         for (int y = lenY - 1; y > -1; y--)
                         {
-                            tempStorage.Add(new Point(x, lenY - y - 1), _cells[x, y]);
+                            mirrored[x, lenY - y - 1] = _cells[x, y];
                         }
                     }
                     break;
-            }
-
-            foreach (KeyValuePair<Point, int> current in tempStorage)
-            {
-                mirrored[current.Key.X, current.Key.Y] = current.Value;
             }
 
             _cells = mirrored;
@@ -68,9 +72,9 @@ namespace ConwaysGameOfLife.Patterns
         /// <summary>
         /// Tilts the current pattern
         /// </summary>
-        protected void Tilt(TiltOptions options)
+        protected void Tilt(TiltOptions option)
         {
-            for (int i = 0; i < (int)options; i++)
+            for (int i = 0; i < (int)option; i++)
                 Tilt();
         }
 
@@ -78,20 +82,14 @@ namespace ConwaysGameOfLife.Patterns
         {
             int lenX = _cells.GetLength(0);
             int lenY = _cells.GetLength(1);
-            Dictionary<Point, int> tempStorage = new();
             int[,] tilted = new int[lenY, lenX];
 
             for (int x = lenX - 1; x > -1; x--)
             {
                 for (int y = lenY - 1; y > -1; y--)
                 {
-                    tempStorage.Add(new Point(x, lenY - y - 1), _cells[x, y]);
+                    tilted[lenY - y - 1, x] = _cells[x, y];
                 }
-            }
-
-            foreach (KeyValuePair<Point, int> current in tempStorage)
-            {
-                tilted[current.Key.Y, current.Key.X] = current.Value;
             }
 
             _cells = tilted;
@@ -104,8 +102,35 @@ namespace ConwaysGameOfLife.Patterns
         protected void Set(int[,] cells)
         {
             _cells = cells;
-            Mirror();
-            Tilt(TiltOptions.ThreeQuarters);
+        }
+
+        public IEnumerable<Cell> Manufacture(int offsetX, int offsetY)
+        {
+            _offsetX = offsetX - (_cells.GetLength(1) / 2) * Cell2D.Width;
+            _offsetY = offsetY - (_cells.GetLength(0) / 2) * Cell2D.Heigth;
+            IList<Cell> cells = new List<Cell>();
+            for (int x = 0; x < Cells.GetLength(1); x++)
+                for (int y = 0; y < Cells.GetLength(0); y++)
+                    if (Cells[y, x] == 1)
+                    {
+                        double relX = x * Cell2D.Width + _offsetX;
+                        double relY = y * Cell2D.Heigth + _offsetY;
+
+                        cells.Add(new Cell2D(new Point((int)relX, (int)relY), CellState.Preview));
+                    }
+            return cells;
+        }
+
+        public IEnumerable<Cell> Manufacture()
+        {
+            IList<Cell> cells = new List<Cell>();
+
+            for (int x = 0; x < Cells.GetLength(1); x++)
+                for (int y = 0; y < Cells.GetLength(0); y++)
+                    if (Cells[y, x] == 1)
+                        cells.Add(new Cell2D(new Point(x, y), CellState.Preview));
+
+            return cells;
         }
 
         /// <summary>

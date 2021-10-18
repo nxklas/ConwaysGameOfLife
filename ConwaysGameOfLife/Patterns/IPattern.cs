@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConwaysGameOfLife.Abstracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,7 @@ namespace ConwaysGameOfLife.Patterns
         /// Represents the name of the specific pattern
         /// </summary>
         public string Name { get; }
+
+        public IEnumerable<Cell> Manufacture();
     }
 }

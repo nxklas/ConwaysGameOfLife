@@ -1,12 +1,13 @@
-﻿namespace ConwaysGameOfLife.Abstracts
+﻿using ConwaysGameOfLife.Translators;
+
+namespace ConwaysGameOfLife.Abstracts
 {
     /// <summary>
     /// Represents the base class for cells
     /// </summary>
-    public abstract class Cell : IInspect
+    public abstract class Cell
     {
-        private CellState _state;
-        private bool _getsInspected;
+        protected CellState _state;
 
         /// <summary>
         /// Initializes a new instance of <see cref="Cell"/> class which is dead
@@ -22,16 +23,15 @@
         public Cell(CellState state)
         {
             _state = state;
-            _getsInspected= false;
         }
 
         /// <summary>
         /// Indicates whether current cell gets inspected by <see cref="GameManager2D.NextGeneration"/>
         /// </summary>
-        public bool GetsInspected { get => _getsInspected; set => _getsInspected = value; }
         /// <summary>
         /// Indicates whether current cell is alive
         /// </summary>
+        /// <returns><see langword="true"/> if current cell is alive; otherwise, <see langword="false"/></returns>
         public bool IsAlive => _state == CellState.Alive;
         /// <summary>
         /// Kills the current cell

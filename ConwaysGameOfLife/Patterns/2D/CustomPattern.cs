@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConwaysGameOfLife.Patterns._2D
+namespace ConwaysGameOfLife.Patterns
 {
     /// <summary>
     /// Represents a custom pattern

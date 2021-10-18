@@ -12,6 +12,7 @@
         /// <summary>
         /// Indicates that a <see cref="ConwaysGameOfLife.Abstracts.Cell"/> instance is dead
         /// </summary>
-        Dead
+        Dead,
+        Preview
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ConwaysGameOfLife.Abstracts;
+using ConwaysGameOfLife.Translators;
 using System.Drawing;
 
 namespace ConwaysGameOfLife
@@ -24,7 +25,7 @@ namespace ConwaysGameOfLife
         /// </summary>
         /// <param name="x">The x-coordinate on the playground</param>
         /// <param name="y">The y-coordinate on the playground</param>
-        public Cell2D(int x, int y) : this(x, y, CellState.Dead)
+        public Cell2D(int x, int y) : this(new Point(x,y), CellState.Dead)
         {
         }
 
@@ -34,9 +35,9 @@ namespace ConwaysGameOfLife
         /// <param name="x">The x-coordinate on the playground</param>
         /// <param name="y">The y-coordinate on the playground</param>
         /// <param name="state">Indicates the state of the cell (alive / dead)</param>
-        public Cell2D(int x, int y, CellState state) : base(state)
+        public Cell2D(Point point, CellState state) : base(state)
         {
-            _position = new Point(x, y);
+            _position = point;
         }
 
         /// <summary>
@@ -45,8 +46,8 @@ namespace ConwaysGameOfLife
         /// <param name="graphics">The graphics used to paint</param>
         public void Draw(Graphics graphics)
         {
-            graphics.FillRectangle(GetsInspected ? Brushes.Blue : IsAlive ? Brushes.Green : Brushes.Black, _position.X, _position.Y, Width, Heigth);
-            graphics.DrawRectangle(new Pen(Color.White),_position.X,_position.Y,Width,Heigth);
+            graphics.FillRectangle(_state==CellState.Preview ? Brushes.Blue : IsAlive ? Brushes.Green : Brushes.Black, _position.X, _position.Y, Width, Heigth);
+            graphics.DrawRectangle(new Pen(Color.White), _position.X, _position.Y,Width,Heigth);
         }
     }
 }
